@@ -410,6 +410,7 @@ class Model
                     $flag = true;
                 }
                 if (! is_int($key)) {
+                    $value = escape_string($value);
                     if ($fuzzy) {
                         $where_string .= $key . " like '%" . $value . "%' ";
                     } else {

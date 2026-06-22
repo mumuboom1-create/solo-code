@@ -229,7 +229,6 @@ class IndexController extends Controller
     // 首页
     public function getIndexPage()
     {
-        echo 'GIP_START';
         $content = parent::parser($this->htmldir . 'index.html'); // 框架标签解析
         $content = $this->parser->parserBefore($content); // CMS公共标签前置解析
         $content = str_replace('{pboot:pagetitle}', $this->config('index_title') ?: '{pboot:sitetitle}-{pboot:sitesubtitle}', $content);

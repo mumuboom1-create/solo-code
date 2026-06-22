@@ -16,6 +16,7 @@ class DoModel extends Model
     // 新增访问
     public function addVisits($id)
     {
+        $id = intval($id);
         $data = array(
             'visits' => '+=1'
         );
@@ -25,6 +26,7 @@ class DoModel extends Model
     // 新增喜欢
     public function addLikes($id)
     {
+        $id = intval($id);
         $data = array(
             'likes' => '+=1'
         );
@@ -34,6 +36,7 @@ class DoModel extends Model
     // 新增喜欢
     public function addOppose($id)
     {
+        $id = intval($id);
         $data = array(
             'oppose' => '+=1'
         );

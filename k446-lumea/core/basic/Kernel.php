@@ -15,8 +15,6 @@ class Kernel
      */
     public static function run()
     {
-        header("X-Diag: 0-run");
-        
         // ====== License check ======
         self::checkLicense();
         // ====== License check end ======
@@ -74,14 +72,12 @@ class Kernel
         if (!defined('P')) {
             // P: PathInfo-style path (without leading/trailing slash). Empty when no path.
             define('P', $path);
-            header("X-Diag: 1-path=$path");
         }
         if (!defined('G')) {
             define('G', isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '');
         }
 
         // Dispatch
-        header("X-Diag: 2-before-dispatch");
         self::dispatch($path);
     }
     /**
@@ -177,15 +173,12 @@ class Kernel
             error('Controller ' . ucfirst($controllerName) . ' not found: ' . $classFile);
         }
 
-        header("X-Diag: 3-controller-$controllerName");
-
         // Instantiate and call
         $instance = new $className();
 
         // Root path for home/index -> call getIndexPage directly
         if ($module === 'home' && strtolower($controllerName) === 'index' && $actionName === 'index' && $path === '') {
             if (method_exists($instance, 'getIndexPage')) {
-                header("X-Diag: 4-root-index-direct");
                 $instance->getIndexPage();
                 return;
             }
@@ -196,13 +189,11 @@ class Kernel
         } elseif (method_exists($instance, '_empty')) {
             // PbootCMS-style fallback dispatcher
             $callable = array($instance, '_empty');
-            header("X-Diag: 4-fallback-empty-m=$module-c=$controllerName-a=$actionName");
         } else {
             error('Method ' . $actionName . ' not found in controller ' . ucfirst($controllerName));
         }
 
         $result = call_user_func($callable, $actionName);
-        header("X-Diag: 5-after-call");
         if ($result !== null) {
             echo $result;
         }
