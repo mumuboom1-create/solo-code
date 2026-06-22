@@ -104,7 +104,17 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="twonav" onclick="this.parentElement.classList.toggle('is-open');this.parentElement.querySelector('.nav-inner').classList.toggle('is-open')"></div>
         <div class="nav-inner">
           {pboot:2nav parent=[nav:scode]}
-          <a href="[2nav:link]">[2nav:name]</a>
+          <div class="nav-2item">
+            <a href="[2nav:link]">[2nav:name]</a>
+            {pboot:if([2nav:soncount]>0)}
+            <div class="threenav" onclick="event.stopPropagation();this.parentElement.classList.toggle('is-open');this.parentElement.querySelector('.nav-inner-3').classList.toggle('is-open')"></div>
+            <div class="nav-inner-3">
+              {pboot:3nav parent=[2nav:scode]}
+              <a href="[3nav:link]">[3nav:name]</a>
+              {/pboot:3nav}
+            </div>
+            {/pboot:if}
+          </div>
           {/pboot:2nav}
         </div>
         {/pboot:if}
