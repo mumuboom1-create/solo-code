@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title>{pboot:sitetitle}</title>`n<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5gEDKDEmsqbDkCwAAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAOU0SFRsMAAAAAAABkpStAAAAASUVORK5CYII=" />
+<meta name="keywords" content="{pboot:sitekeywords}">
+<meta name="description" content="{pboot:sitedescription}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/swiper.min.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/style.v2.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/animate.min.css">
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/swiper.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/swiper.animate1.0.3.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/wow.min.js">
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  var faders = document.querySelectorAll('.v2-fade-up');
+  var appearOptions = { threshold: 0.15, rootMargin: "0px 0px -60px 0px" };
+  var appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('v2-show');
+      appearOnScroll.unobserve(entry.target);
+    });
+  }, appearOptions);
+  faders.forEach(function(fader){ appearOnScroll.observe(fader); });
+  var nav = document.querySelector('.v2-nav');
+  if(nav){
+    window.addEventListener('scroll', function(){
+      if (window.scrollY > 10) nav.classList.add('is-solid');
+      else nav.classList.remove('is-solid');
+    });
+  }
+});
+</script>
+</head>
+<body class="menu-bg">
+<header class="v2-nav">
+  <div class="v2-nav-inner">
+    <a href="{pboot:sitedomain}/" class="v2-logo">
+      <img src="{pboot:sitelogo}" alt="{pboot:sitetitle}">
+    </a>
+    <ul class="v2-nav-list">
+      <li><a href="{pboot:sitedomain}/" class="{pboot:if(0=='{sort:scode}')}cur{/pboot:if}">Home</a></li>
+      {pboot:nav}
+      <li>
+        <a href="[nav:link]" class="{pboot:if('[nav:scode]'=='{sort:tcode}')}cur{/pboot:if}">[nav:name]</a>
+        {pboot:if([nav:soncount]>0)}
+        <ul class="one">
+          {pboot:2nav parent=[nav:scode]}
+          <li>
+            <a href="[2nav:link]">[2nav:name]</a>
+            {pboot:if([2nav:soncount]>0)}
+            <ul class="two">
+              {pboot:3nav parent=[2nav:scode]}
+              <li><a href="[3nav:link]">[3nav:name]</a></li>
+              {/pboot:3nav}
+            </ul>
+            {/pboot:if}
+          </li>
+          {/pboot:2nav}
+        </ul>
+        {/pboot:if}
+      </li>
+      {/pboot:nav}
+    </ul>
+    <div class="v2-nav-cta">
+      <div class="v2-lang">
+        <a href="/" class="cur">EN</a>
+        <a href="/cn/">涓枃</a>
+      </div>
+      <button class="v2-search-toggle" aria-label="Open search" onclick="document.querySelector('.v2-search-mask').classList.add('is-open');setTimeout(function(){document.querySelector('.v2-search-form input').focus()},100)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="v2-mnav">
+  <div class="v2-mnav-inner">
+    <a href="{pboot:sitedomain}/" class="v2-logo">
+      <img src="{pboot:sitelogo}" alt="{pboot:sitetitle}" style="max-height:28px">
+    </a>
+    <button class="v2-mnav-toggle" aria-label="Toggle menu" onclick="this.classList.toggle('is-open');document.querySelector('.v2-mnav-panel').classList.toggle('is-open')">
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="v2-mnav-panel">
+    <ul>
+      <li><a href="{pboot:sitedomain}/">Home</a></li>
+      {pboot:nav}
+      <li>
+        <a href="[nav:link]">[nav:name]</a>
+        {pboot:if([nav:soncount]>0)}
+        <div class="twonav" onclick="this.parentElement.classList.toggle('is-open');this.parentElement.querySelector('.nav-inner').classList.toggle('is-open')"></div>
+        <div class="nav-inner">
+          {pboot:2nav parent=[nav:scode]}
+          <a href="[2nav:link]">[2nav:name]</a>
+          {/pboot:2nav}
+        </div>
+        {/pboot:if}
+      </li>
+      {/pboot:nav}
+    </ul>
+    <div class="v2-mnav-foot">
+      <div class="v2-lang">
+        <a href="/" class="cur">EN</a>
+        <a href="/cn/">涓枃</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="v2-search-mask" onclick="event.currentTarget.classList.remove('is-open')">
+  <div class="v2-search-close" onclick="this.closest('.v2-search-mask').classList.remove('is-open')">鉁?/div>
+  <form class="v2-search-form" method="post" action="{pboot:scaction}" onclick="event.stopPropagation()">
+    <input type="text" name="keyword" required placeholder="Search products...">
+    <button type="submit">Search</button>
+  </form>
+</div>

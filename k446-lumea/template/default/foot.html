@@ -1,0 +1,35 @@
+
+<!-- Footer v2 -->
+<footer class="v2-ft">
+  <div class="v2-wrap">
+    <div class="v2-ft-top">
+      <div class="v2-ft-brand">
+        <a href="{pboot:sitedomain}/" class="v2-logo">
+          <img src="{pboot:sitelogo}" alt="{pboot:sitetitle}" style="max-height:36px">
+        </a>
+        <p>Bespoke decorative lighting for hotels, residences, and brand spaces worldwide — engineered for global voltage, UL/CE/ROHS certified.</p>
+        <form class="v2-ft-form" method="post" action="{pboot:message}">
+          <input type="email" name="mobile" required placeholder="Your email">
+          <button type="submit">Get catalogue</button>
+        </form>
+      </div>
+      {pboot:nav}
+      <div>
+        <h6>[nav:name]</h6>
+        {pboot:2nav num=6 parent=[nav:scode]}
+        <a href="[2nav:link]">[2nav:name]</a>
+        {/pboot:2nav}
+      </div>
+      {/pboot:nav}
+    </div>
+    <div class="v2-ft-bottom">
+      <span>{pboot:sitecopyright}</span>
+      <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">{pboot:siteicp}</a> · Search by PbootCMS</span>
+    </div>
+  </div>
+</footer>
+<div style="display:none">
+  <script type="text/javascript">
+    new WOW().init();
+  </script>
+</div>

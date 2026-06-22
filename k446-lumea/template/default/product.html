@@ -1,0 +1,75 @@
+﻿{include file=head.html}
+{pboot:sort scode={sort:tcode}}
+<div class="v2-page-banner" style="margin-top:72px">
+  <div class="v2-bg-image" style="background-image:url([sort:pic])"></div>
+  <div class="v2-wrap">
+    <h1 class="v2-fade-up">[sort:name]</h1>
+  </div>
+{/pboot:sort}
+</div>
+
+<div class="v2-prod-detail">
+  <div class="v2-wrap">
+    <div class="v2-prod-top">
+      <div class="v2-prod-gallery v2-fade-up">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            {pboot:pics id={content:id} num=10}
+            <div class="swiper-slide"><img src="[pics:src]" alt="[pics:title]"></div>
+            {/pboot:pics}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      <div class="v2-prod-info">
+        <h1 class="v2-fade-up">{content:title}</h1>
+        <div class="v2-desc v2-fade-up">{content:description}</div>
+        {pboot:if({content:ext_watt} != '')}
+        <div class="v2-meta-row v2-fade-up">
+          <div><b>Power:</b> {content:ext_watt}</div>
+          <div><b>CRI:</b> {content:ext_cri}</div>
+          <div><b>Color temp:</b> {content:ext_temp}</div>
+          <div><b>Voltage:</b> {content:ext_voltage}</div>
+        </div>
+        {/pboot:if}
+        <div class="v2-fade-up" style="margin-top:32px">
+          {pboot:sort scode={label:contact_scode}}
+          <a href="[sort:link]#contact-form" class="v2-btn v2-btn--gold">Inquire about this product →</a>
+          {/pboot:sort}
+        </div>
+      </div>
+    </div>
+
+    <div class="v2-prod-tabs v2-fade-up" style="margin-top:64px">
+      <button class="v2-active" onclick="v2SwitchTab(event,1)">Description</button>
+      <button onclick="v2SwitchTab(event,2)">Technical parameters</button>
+      <button onclick="v2SwitchTab(event,3)">Application scenarios</button>
+    </div>
+
+    <div class="v2-prod-tab-content v2-active v2-fade-up" id="tab-1">
+      {content:content}
+    </div>
+    <div class="v2-prod-tab-content" id="tab-2">
+      <table class="v2-tech-table">
+        {content:ext_canshu}
+      </table>
+    </div>
+    <div class="v2-prod-tab-content" id="tab-3">
+      {content:ext_scenarios}
+    </div>
+  </div>
+</div>
+
+<script>
+function v2SwitchTab(e, idx){
+  e.currentTarget.parentElement.querySelectorAll('button').forEach(function(el){ el.classList.remove('v2-active') });
+  e.currentTarget.classList.add('v2-active');
+  document.querySelectorAll('.v2-prod-tab-content').forEach(function(el){ el.classList.remove('v2-active') });
+  document.getElementById('tab-' + idx).classList.add('v2-active');
+}
+var swiper = new Swiper('.v2-prod-gallery .swiper-container', {
+  speed: 1000, loop: true, pagination: { el: '.swiper-pagination', clickable: true }
+});
+</script>
+{include file=foot.html}
+

@@ -1,0 +1,41 @@
+﻿{include file=head.html}
+{pboot:sort scode={sort:tcode}}
+<div class="v2-page-banner" style="margin-top:72px">
+  <div class="v2-bg-image" style="background-image:url([sort:pic])"></div>
+  <div class="v2-wrap">
+    <h1 class="v2-fade-up">[sort:name]</h1>
+  </div>
+{/pboot:sort}
+</div>
+
+<div class="v2-section v2-list-section">
+  <div class="v2-wrap">
+    <div class="v2-proj-grid">
+      {pboot:list num=6 order=sorting}
+      <div class="v2-proj {if [list:i]%2 == 1}v2-proj-wide{else}v2-proj-narrow{/if} v2-fade-up">
+        <a href="[list:link]">
+          <div class="v2-pic" style="background-image:url([list:ico])"></div>
+          <div class="v2-meta">
+            <em>{pboot:sort scode=[list:sortcode]} [sort:name] {/pboot:sort}</em>
+            <h4>[list:title]</h4>
+            <p>[list:description lencn=50]</p>
+          </div>
+        </a>
+      </div>
+      {/pboot:list}
+    </div>
+    {pboot:if({page:rows}>0)}
+    <div class="v2-pagination">
+      <a class="v2-page-item hidden-sm" href="{page:index}" title="首页">首页</a>
+      <a class="v2-page-item st" href="{page:pre}" title="上一页">«</a>
+      {page:numbar}
+      <a class="v2-page-item v2-current" href="javascript:;">{page:current}/{page:count}</a>
+      <a class="v2-page-item st" href="{page:next}" title="下一页">»</a>
+      <a class="v2-page-item hidden-sm" href="{page:last}" title="末页">末页</a>
+    </div>
+    {/pboot:if}
+  </div>
+</div>
+
+{include file=foot.html}
+

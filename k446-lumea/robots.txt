@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /ad*
+Disallow: /static/*
+Disallow: /api/*
+Disallow: /?*
+Disallow: /app*/
+Disallow: /app

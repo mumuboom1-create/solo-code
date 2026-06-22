@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title>{pboot:sitetitle}</title>
+<meta name="keywords" content="{pboot:sitekeywords}">
+<meta name="description" content="{pboot:sitedescription}">
+<meta name="author" content="www.datiyan.com k446" />
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/swiper.min.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/style.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/media.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/animate.min.css">
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/swiper.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/swiper.animate1.0.3.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/wow.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.countup.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/main.js"></script>
+</head>
+<body class="menu-bg">
+{include file=head.html}
+<!-- Banner -->
+<div class="in-banner swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <div class="seat"></div>
+      <video id="my-video" src="{label:video}" autoplay muted="" x5-video-player-type="h5" preload="auto" playsinline="" loop></video>
+      {pboot:slide gid=1 num=1}<img class="mimg" src="[slide:src]">{/pboot:slide}
+      {pboot:slide gid=1 num=1}
+      <div class="title-box">
+        <h5 class="big ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1s" swiper-animate-delay="0.3s">[slide:title]</h5>
+        <p class="small ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1s" swiper-animate-delay="0.5s">[slide:subtitle]</p>
+        <a class="banner-more ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="1s" swiper-animate-delay="0.8s" href="#">
+        <p class="d-more">Learn More</p>
+        </a> </div>
+        {/pboot:slide}
+    </div>
+  </div>
+</div>
+<!-- 最新产品 -->
+
+<div class="in-product">
+  <div class="container">
+    <div class="product-title wow fadeInUp" data-wow-delay="300ms">最新产品</div>
+    <article class="product-wrapper">
+      {pboot:list scode=1 num=6 order=sorting}
+      <div class="product-item small  wow fadeInUp" data-wow-delay="500ms">
+        <div> <a href="[list:link]" class="img-product" style="background-image: url([list:ico]);" target="_blank">
+          <div class="product-des">
+            <h4>[list:title]</h4>
+            <h6>[list:description lencn=20]</h6>
+            <span> 查看详情 <img src="{pboot:sitedomain}/skin/images/product-right.png"></span> </div>
+          </a> </div>
+      </div>
+      {/pboot:list}     
+    </article>
+  </div>
+</div>
+
+<!-- 公司简介 -->
+{pboot:sort scode=18}
+<div class="in-company">
+  <div class="company-wrapper container">
+    <div class="left">
+      <div class="company-title wow fadeInUp" data-wow-delay="300ms">[sort:name]</div>
+      <div class="roll wow fadeInUp" data-wow-delay="400ms">
+        <p class="sum">公司自<span>2006</span>年成立</p>
+        <p class="sum">软件著作权<span>30</span>+</p>
+      </div>
+      <div class="introduce wow fadeInUp" data-wow-delay="500ms">
+        {pboot:content id=24}
+        <p>[content:content drophtml=1 dropblank=1 len=250 more='...']</p>
+        {/pboot:content}
+      </div>
+    </div>
+    <div class="right wow fadeInUp" data-wow-delay="600ms">
+      <div class="bigimg">{pboot:content id=24}<img class="img" src="[content:ico]" width="540">{/pboot:content}</div>
+    </div>
+  </div>
+</div>
+{/pboot:sort}
+<!-- 新闻中心 -->
+{pboot:sort scode=15}
+<div class="in-news">
+  <div class="news-wrapper container">
+    <div class="news-name">
+      <div class="news-title wow fadeInLeft" data-wow-delay="300ms">[sort:name]</div>
+      <div class="news-more wow fadeInRight" data-wow-delay="300ms"> <img class="img1" src="{pboot:sitedomain}/skin/images/news-more.png" alt=""> <img class="img2" src="{pboot:sitedomain}/skin/images/news-more-hover.png" alt=""> <a href="[sort:link]">查看更多</a> </div>
+    </div>
+    <div class="news-content">
+      <div class="news-latest swiper-container wow fadeInLeft" data-wow-delay="500ms">
+        <ul class="swiper-wrapper">
+          {pboot:list scode=[sort:scode] num=3 order=sorting}
+          <li class="swiper-slide"> <a href="[list:link]"> <img class="ofi" src="[list:ico]" alt=""> </a> </li>
+          {/pboot:list}
+        </ul>
+        <div class="news-bg wow slideOutRight"></div>
+      </div>
+      <ul class="news-list wow fadeInRight" data-wow-delay="500ms">
+        {pboot:list scode=[sort:scode] num=3 order=sorting}
+        <li class="news-item"> <a href="[list:link]">
+          <p class="news-date">[list:date style=Y-m-d]</p>
+          <p class="news-title">[list:title]</p>
+          <p class="news-msg">[list:description lencn=60]</p>
+          <div class="news-link"></div>
+          </a> </li>
+        {/pboot:list}
+      </ul>
+    </div>
+  </div>
+</div>
+{/pboot:sort}
+{include file=foot.html}
+</body>
+</html>

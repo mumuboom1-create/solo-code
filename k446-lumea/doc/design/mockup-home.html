@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lumea — Bespoke Lighting · Home Mockup</title>
+<style>
+  :root{
+    --bg:#0b0b0d;
+    --bg-2:#101013;
+    --ink:#ece7df;
+    --ink-dim:#9a948a;
+    --line:rgba(236,231,223,.14);
+    --gold:#d8b46a;
+    --gold-soft:#caa15a;
+    --ff-serif:'Cormorant Garamond','EB Garamond',Georgia,'Times New Roman',serif;
+    --ff-sans:'Inter','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--ff-sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1440px;margin:0 auto;padding:0 48px}
+  @media (max-width:720px){.wrap{padding:0 22px}}
+
+  /* Top Nav */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);background:rgba(11,11,13,.55);border-bottom:1px solid var(--line)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{font-family:var(--ff-serif);font-size:24px;letter-spacing:.18em;font-weight:500}
+  .logo em{color:var(--gold);font-style:normal}
+  .nav ul{display:flex;gap:34px;list-style:none}
+  .nav ul a{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-dim);transition:color .25s}
+  .nav ul a:hover{color:var(--ink)}
+  .nav-cta{display:flex;gap:14px;align-items:center}
+  .lang{font-size:12px;letter-spacing:.22em;color:var(--ink-dim)}
+  .lang b{color:var(--ink);font-weight:500}
+  .btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);transition:.25s}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  @media (max-width:980px){.nav ul,.lang{display:none}}
+
+  /* Hero */
+  .hero{position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:flex-end;padding-bottom:88px;padding-top:140px;
+    background:radial-gradient(1200px 700px at 70% 20%,rgba(216,180,106,.18),transparent 60%),radial-gradient(800px 600px at 20% 80%,rgba(216,180,106,.06),transparent 65%),#08080a}
+  .stars{position:absolute;inset:0;background:
+    radial-gradient(2px 2px at 12% 18%,rgba(255,220,150,.9),transparent 60%),
+    radial-gradient(2px 2px at 22% 30%,rgba(255,220,150,.7),transparent 60%),
+    radial-gradient(1.5px 1.5px at 28% 12%,rgba(255,220,150,.6),transparent 60%),
+    radial-gradient(2px 2px at 70% 22%,rgba(255,220,150,.85),transparent 60%),
+    radial-gradient(2px 2px at 78% 32%,rgba(255,220,150,.7),transparent 60%),
+    radial-gradient(1.5px 1.5px at 64% 16%,rgba(255,220,150,.55),transparent 60%),
+    radial-gradient(2.5px 2.5px at 50% 8%,rgba(255,220,150,.95),transparent 60%);
+    opacity:.85;pointer-events:none}
+  .chandelier{position:absolute;top:0;left:50%;transform:translateX(-50%);width:min(900px,80vw);pointer-events:none;opacity:.95;z-index:1}
+  .hero-text{position:relative;z-index:2;width:100%}
+  .eyebrow{display:inline-flex;align-items:center;gap:14px;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:28px}
+  .eyebrow::before{content:"";width:36px;height:1px;background:var(--gold)}
+  .h1{font-family:var(--ff-serif);font-weight:400;font-size:clamp(56px,10vw,148px);line-height:.92;letter-spacing:-.02em}
+  .h1 i{font-style:italic;color:var(--gold)}
+  .hero-meta{display:flex;justify-content:space-between;align-items:flex-end;margin-top:48px;gap:32px;flex-wrap:wrap}
+  .hero-sub{max-width:420px;color:var(--ink-dim);font-size:14px}
+  .scroll-hint{display:flex;align-items:center;gap:10px;color:var(--ink-dim);font-size:11px;letter-spacing:.3em;text-transform:uppercase}
+  .scroll-hint span{display:inline-block;width:36px;height:1px;background:var(--ink-dim)}
+  .hero-tags{display:flex;gap:18px;margin-top:24px;flex-wrap:wrap}
+  .hero-tags em{font-style:normal;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);padding:8px 14px;border:1px solid var(--line);border-radius:999px}
+
+  /* Marquee */
+  .marquee{border-block:1px solid var(--line);overflow:hidden;background:var(--bg-2)}
+  .marquee-track{display:flex;gap:64px;padding:22px 0;white-space:nowrap;animation:slide 50s linear infinite}
+  .marquee span{font-family:var(--ff-serif);font-size:28px;letter-spacing:.04em;color:var(--ink-dim)}
+  .marquee span i{color:var(--gold);font-style:italic}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* Section base */
+  section{padding:140px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;flex-wrap:wrap}
+  .sec-tag{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .sec-title{font-family:var(--ff-serif);font-weight:400;font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-.01em;max-width:760px}
+  .sec-title i{font-style:italic;color:var(--gold-soft)}
+  .sec-desc{max-width:380px;color:var(--ink-dim);font-size:14px}
+
+  /* Collections */
+  .collections{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+  .col-card{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:3/4;background:#1a1a1f;cursor:pointer;transition:transform .6s ease}
+  .col-card.large{grid-column:span 6;aspect-ratio:4/5}
+  .col-card.tall{grid-column:span 3}
+  .col-card.wide{grid-column:span 6;aspect-ratio:5/3}
+  .col-card .scene{position:absolute;inset:0}
+  .col-card .scene::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.78) 100%);z-index:2}
+  .col-card .info{position:absolute;left:24px;right:24px;bottom:24px;z-index:3;display:flex;justify-content:space-between;align-items:flex-end}
+  .col-card .info h3{font-family:var(--ff-serif);font-weight:400;font-size:32px;letter-spacing:.01em}
+  .col-card .info h3 i{color:var(--gold);font-style:italic}
+  .col-card .info span{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-dim);display:block;margin-bottom:6px}
+  .col-card:hover{transform:translateY(-4px)}
+  .arrow-btn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.35);display:inline-flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;transition:.25s}
+  .col-card:hover .arrow-btn{background:var(--gold);border-color:var(--gold);color:#0b0b0d}
+  @media (max-width:900px){.col-card.large,.col-card.tall,.col-card.wide{grid-column:span 12;aspect-ratio:4/3}}
+
+  /* CSS-painted "scenes" so the mockup needs no external images */
+  .s-modern{background:radial-gradient(420px 280px at 60% 40%,rgba(255,220,160,.5),transparent 65%),linear-gradient(180deg,#1a1a1e 0%,#0c0c0f 100%)}
+  .s-modern::after{content:"";position:absolute;inset:0;background:
+    radial-gradient(circle at 60% 40%,rgba(255,220,160,.95) 0 5px,transparent 6px),
+    linear-gradient(to bottom,rgba(255,220,160,.5),transparent 70%) 60% 0/2px 40% no-repeat;z-index:1}
+  .s-luxury{background:radial-gradient(620px 380px at 50% 32%,rgba(255,210,140,.45),transparent 65%),linear-gradient(180deg,#0f0d10 0%,#070608 100%)}
+  .s-luxury::after{content:"";position:absolute;inset:0;background:
+    radial-gradient(2px 2px at 30% 32%,rgba(255,220,160,.95),transparent 60%),
+    radial-gradient(2px 2px at 36% 28%,rgba(255,220,160,.85),transparent 60%),
+    radial-gradient(2px 2px at 42% 34%,rgba(255,220,160,.9),transparent 60%),
+    radial-gradient(2px 2px at 48% 26%,rgba(255,220,160,.95),transparent 60%),
+    radial-gradient(2px 2px at 54% 32%,rgba(255,220,160,.85),transparent 60%),
+    radial-gradient(2px 2px at 60% 30%,rgba(255,220,160,.9),transparent 60%),
+    radial-gradient(2px 2px at 66% 34%,rgba(255,220,160,.8),transparent 60%),
+    radial-gradient(2px 2px at 38% 42%,rgba(255,220,160,.7),transparent 60%),
+    radial-gradient(2px 2px at 50% 44%,rgba(255,220,160,.65),transparent 60%),
+    radial-gradient(2px 2px at 62% 42%,rgba(255,220,160,.7),transparent 60%);z-index:1}
+  .s-crystal{background:linear-gradient(160deg,#1a1722 0%,#0a0810 60%,#050407 100%)}
+  .s-crystal::after{content:"";position:absolute;inset:0;background:
+    conic-gradient(from 220deg at 50% 30%, rgba(216,180,106,.0) 0deg, rgba(216,180,106,.45) 60deg, rgba(216,180,106,.0) 120deg),
+    radial-gradient(380px 220px at 50% 32%,rgba(255,225,170,.45),transparent 70%);z-index:1;mix-blend-mode:screen}
+  .s-outdoor{background:linear-gradient(180deg,#1c1a16 0%,#0a0907 100%)}
+  .s-outdoor::after{content:"";position:absolute;inset:0;background:
+    radial-gradient(280px 180px at 30% 60%,rgba(255,200,130,.55),transparent 65%),
+    radial-gradient(280px 180px at 70% 60%,rgba(255,200,130,.45),transparent 65%),
+    linear-gradient(to top,rgba(40,30,20,.6),transparent 60%);z-index:1}
+  .s-project{background:linear-gradient(180deg,#1b1d22 0%,#08090c 100%)}
+  .s-project::after{content:"";position:absolute;inset:0;background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 80px),
+    radial-gradient(500px 300px at 50% 30%,rgba(216,180,106,.35),transparent 65%);z-index:1}
+
+  /* Story / Brand strip */
+  .story{position:relative;background:linear-gradient(180deg,#0a0a0c 0%,#0b0b0d 100%)}
+  .story-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:center}
+  .story-quote{font-family:var(--ff-serif);font-size:clamp(28px,3vw,44px);line-height:1.25;font-weight:400}
+  .story-quote i{color:var(--gold);font-style:italic}
+  .story-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:56px;border-top:1px solid var(--line);padding-top:32px}
+  .story-meta b{font-family:var(--ff-serif);font-size:48px;font-weight:400;color:var(--gold);display:block}
+  .story-meta span{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-dim);margin-top:8px;display:block}
+  .story-art{position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden;background:radial-gradient(500px 380px at 50% 36%,rgba(216,180,106,.4),transparent 70%),linear-gradient(180deg,#15131a,#06060a)}
+  .story-art::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(2px 2px at 50% 30%,rgba(255,220,160,.9),transparent 60%),
+    radial-gradient(2px 2px at 46% 36%,rgba(255,220,160,.7),transparent 60%),
+    radial-gradient(2px 2px at 54% 36%,rgba(255,220,160,.7),transparent 60%),
+    radial-gradient(2px 2px at 50% 44%,rgba(255,220,160,.6),transparent 60%),
+    linear-gradient(to bottom,rgba(255,220,160,.4) 0,transparent 70%) 50% 0/1px 30% no-repeat}
+  @media (max-width:900px){.story-grid{grid-template-columns:1fr;gap:48px}}
+
+  /* Projects strip */
+  .projects{background:#08080a}
+  .proj-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
+  .proj{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:5/4;background:#15151a}
+  .proj.a{grid-column:span 7}
+  .proj.b{grid-column:span 5}
+  .proj.c{grid-column:span 5}
+  .proj.d{grid-column:span 7}
+  .proj .scene{position:absolute;inset:0}
+  .proj .scene::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.78) 100%);z-index:2}
+  .proj .meta{position:absolute;left:28px;right:28px;bottom:28px;z-index:3}
+  .proj .meta em{font-style:normal;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
+  .proj .meta h4{font-family:var(--ff-serif);font-weight:400;font-size:30px;letter-spacing:.01em}
+  .proj .meta p{color:var(--ink-dim);margin-top:6px;font-size:13px}
+  @media (max-width:900px){.proj.a,.proj.b,.proj.c,.proj.d{grid-column:span 12;aspect-ratio:4/3}}
+
+  .p-hotel{background:radial-gradient(520px 320px at 50% 30%,rgba(255,210,140,.45),transparent 65%),linear-gradient(180deg,#1c1a18 0%,#06050a 100%)}
+  .p-villa{background:radial-gradient(420px 260px at 60% 35%,rgba(255,220,150,.4),transparent 65%),linear-gradient(180deg,#161a1f 0%,#070809 100%)}
+  .p-retail{background:radial-gradient(420px 260px at 35% 40%,rgba(255,200,120,.45),transparent 65%),linear-gradient(180deg,#1d1916 0%,#070608 100%)}
+  .p-tower{background:linear-gradient(180deg,#101218 0%,#05060a 100%)}
+  .p-tower::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,210,150,.18) 0 2px,transparent 2px 28px),radial-gradient(500px 260px at 50% 0%,rgba(216,180,106,.3),transparent 70%);z-index:1}
+
+  /* Capabilities */
+  .caps{background:linear-gradient(180deg,#0c0c0e 0%,#08080a 100%)}
+  .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cap{padding:48px 32px;border-right:1px solid var(--line);min-height:280px;display:flex;flex-direction:column;justify-content:space-between}
+  .cap:last-child{border-right:none}
+  .cap b{font-family:var(--ff-serif);font-weight:400;font-size:64px;color:var(--gold);line-height:1}
+  .cap h4{font-family:var(--ff-serif);font-weight:400;font-size:24px;margin-top:18px}
+  .cap p{color:var(--ink-dim);font-size:13px;margin-top:8px}
+  @media (max-width:900px){.cap-grid{grid-template-columns:repeat(2,1fr)}.cap:nth-child(2){border-right:none}.cap:nth-child(1),.cap:nth-child(2){border-bottom:1px solid var(--line)}}
+
+  /* Process timeline */
+  .process{background:#08080a}
+  .timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line);counter-reset:step}
+  .step{padding:36px 24px;border-right:1px solid var(--line);position:relative;counter-increment:step}
+  .step:last-child{border-right:none}
+  .step::before{content:"0" counter(step);font-family:var(--ff-serif);font-size:14px;color:var(--gold);letter-spacing:.2em}
+  .step h5{font-family:var(--ff-serif);font-weight:400;font-size:22px;margin-top:12px}
+  .step p{color:var(--ink-dim);font-size:13px;margin-top:8px;line-height:1.6}
+  @media (max-width:900px){.timeline{grid-template-columns:1fr}.step{border-right:none;border-bottom:1px solid var(--line)}}
+
+  /* Certifications */
+  .certs{background:linear-gradient(180deg,#0a0a0c 0%,#08080a 100%)}
+  .cert-row{display:grid;grid-template-columns:repeat(6,1fr);gap:24px;align-items:center}
+  .cert{aspect-ratio:1/1;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--ff-serif);font-size:22px;color:var(--ink-dim);letter-spacing:.1em;background:#0d0d10;transition:.25s}
+  .cert:hover{border-color:var(--gold);color:var(--gold)}
+  @media (max-width:900px){.cert-row{grid-template-columns:repeat(3,1fr)}}
+
+  /* CTA */
+  .cta{position:relative;background:radial-gradient(900px 500px at 50% 0%,rgba(216,180,106,.22),transparent 70%),#070708;text-align:center;padding:160px 0 140px}
+  .cta h2{font-family:var(--ff-serif);font-weight:400;font-size:clamp(44px,7vw,96px);line-height:1;letter-spacing:-.02em}
+  .cta h2 i{color:var(--gold);font-style:italic}
+  .cta p{color:var(--ink-dim);max-width:540px;margin:24px auto 36px}
+  .cta-actions{display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .btn-gold{display:inline-flex;align-items:center;gap:12px;padding:16px 28px;border-radius:999px;background:var(--gold);color:#0b0b0d;font-size:12px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;transition:.25s}
+  .btn-gold:hover{background:#e8c47a}
+
+  /* Footer */
+  .ft{background:#070708;border-top:1px solid var(--line);padding:80px 0 36px}
+  .ft-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;padding-bottom:56px;border-bottom:1px solid var(--line)}
+  .ft h6{font-family:var(--ff-sans);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:20px;font-weight:500}
+  .ft a{display:block;padding:6px 0;color:var(--ink);font-size:14px}
+  .ft-brand p{color:var(--ink-dim);margin-top:18px;font-size:14px;max-width:340px}
+  .ft-form{display:flex;gap:0;margin-top:18px;border:1px solid var(--line);border-radius:999px;overflow:hidden;max-width:380px}
+  .ft-form input{flex:1;background:transparent;border:none;outline:none;color:var(--ink);padding:14px 18px;font:inherit}
+  .ft-form button{background:var(--gold);color:#0b0b0d;border:none;padding:0 22px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;font-weight:600}
+  .ft-bottom{display:flex;justify-content:space-between;padding-top:24px;color:var(--ink-dim);font-size:12px;flex-wrap:wrap;gap:12px}
+  @media (max-width:900px){.ft-top{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============== NAV ============== -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="logo">L<em>U</em>MEA</a>
+    <nav>
+      <ul>
+        <li><a href="#collections">Collections</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#story">Atelier</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <span class="lang"><b>EN</b> / 中文</span>
+      <a class="btn-ghost" href="#contact">Request Catalogue
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="hero">
+  <div class="stars"></div>
+  <!-- An SVG chandelier replaces the would-be hero photo / video so the mockup is fully self-contained -->
+  <svg class="chandelier" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="bulb" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff3c4" stop-opacity="1"/>
+        <stop offset="40%" stop-color="#ffd57a" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#d8b46a" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="wire" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#d8b46a" stop-opacity=".6"/>
+        <stop offset="100%" stop-color="#d8b46a" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <!-- ceiling cap -->
+    <rect x="395" y="0" width="10" height="80" fill="#d8b46a" opacity=".35"/>
+    <!-- main ring -->
+    <ellipse cx="400" cy="220" rx="280" ry="40" stroke="#d8b46a" stroke-opacity=".5" stroke-width="1" fill="none"/>
+    <ellipse cx="400" cy="260" rx="220" ry="32" stroke="#d8b46a" stroke-opacity=".35" stroke-width="1" fill="none"/>
+    <ellipse cx="400" cy="300" rx="160" ry="24" stroke="#d8b46a" stroke-opacity=".25" stroke-width="1" fill="none"/>
+    <!-- wires from ceiling -->
+    <line x1="400" y1="80" x2="160" y2="220" stroke="url(#wire)" stroke-width="1"/>
+    <line x1="400" y1="80" x2="640" y2="220" stroke="url(#wire)" stroke-width="1"/>
+    <line x1="400" y1="80" x2="280" y2="260" stroke="url(#wire)" stroke-width="1"/>
+    <line x1="400" y1="80" x2="520" y2="260" stroke="url(#wire)" stroke-width="1"/>
+    <line x1="400" y1="80" x2="400" y2="300" stroke="url(#wire)" stroke-width="1"/>
+    <!-- bulbs (rings of light) -->
+    <g id="bulbs">
+      <circle cx="160" cy="220" r="14" fill="url(#bulb)"/>
+      <circle cx="640" cy="220" r="14" fill="url(#bulb)"/>
+      <circle cx="240" cy="232" r="11" fill="url(#bulb)"/>
+      <circle cx="560" cy="232" r="11" fill="url(#bulb)"/>
+      <circle cx="320" cy="240" r="9" fill="url(#bulb)"/>
+      <circle cx="480" cy="240" r="9" fill="url(#bulb)"/>
+      <circle cx="400" cy="244" r="10" fill="url(#bulb)"/>
+      <circle cx="280" cy="270" r="8" fill="url(#bulb)"/>
+      <circle cx="520" cy="270" r="8" fill="url(#bulb)"/>
+      <circle cx="360" cy="280" r="8" fill="url(#bulb)"/>
+      <circle cx="440" cy="280" r="8" fill="url(#bulb)"/>
+      <circle cx="400" cy="312" r="14" fill="url(#bulb)"/>
+    </g>
+    <!-- soft glow halo -->
+    <ellipse cx="400" cy="260" rx="320" ry="180" fill="url(#bulb)" opacity=".25"/>
+  </svg>
+
+  <div class="wrap hero-text">
+    <div class="eyebrow">Atelier · Est. 2006 · Made in China</div>
+    <h1 class="h1">Light, <i>made</i><br/>by hand.</h1>
+    <div class="hero-meta">
+      <p class="hero-sub">Bespoke decorative lighting for hotels, residences, and brand spaces. Crystal, brass, and blown glass — engineered for global voltage, certified for the world.</p>
+      <div class="scroll-hint"><span></span> Scroll to explore</div>
+    </div>
+    <div class="hero-tags">
+      <em>Modern</em><em>Luxury</em><em>Crystal</em><em>Outdoor</em><em>Project Lighting</em>
+    </div>
+  </div>
+</section>
+
+<!-- ============== MARQUEE ============== -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Four Seasons <i>·</i></span><span>Marriott <i>·</i></span><span>Mandarin Oriental <i>·</i></span>
+    <span>Ritz-Carlton <i>·</i></span><span>Aman <i>·</i></span><span>Rosewood <i>·</i></span>
+    <span>St. Regis <i>·</i></span><span>The Peninsula <i>·</i></span>
+    <span>Four Seasons <i>·</i></span><span>Marriott <i>·</i></span><span>Mandarin Oriental <i>·</i></span>
+    <span>Ritz-Carlton <i>·</i></span><span>Aman <i>·</i></span><span>Rosewood <i>·</i></span>
+  </div>
+</div>
+
+<!-- ============== COLLECTIONS ============== -->
+<section id="collections">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">01 — Collections</div>
+        <h2 class="sec-title">Five families, <i>one</i> obsession with light.</h2>
+      </div>
+      <p class="sec-desc">Each collection is a different conversation between material, scale, and mood — yet all share the same atelier hand.</p>
+    </div>
+
+    <div class="collections">
+      <a class="col-card large" href="#">
+        <div class="scene s-luxury"></div>
+        <div class="info">
+          <div>
+            <span>Collection 01</span>
+            <h3>Lux<i>ury</i></h3>
+          </div>
+          <span class="arrow-btn" aria-hidden="true">→</span>
+        </div>
+      </a>
+      <a class="col-card tall" href="#">
+        <div class="scene s-modern"></div>
+        <div class="info">
+          <div>
+            <span>Collection 02</span>
+            <h3>Mod<i>ern</i></h3>
+          </div>
+          <span class="arrow-btn" aria-hidden="true">→</span>
+        </div>
+      </a>
+      <a class="col-card tall" href="#">
+        <div class="scene s-crystal"></div>
+        <div class="info">
+          <div>
+            <span>Collection 03</span>
+            <h3>Cry<i>stal</i></h3>
+          </div>
+          <span class="arrow-btn" aria-hidden="true">→</span>
+        </div>
+      </a>
+      <a class="col-card wide" href="#">
+        <div class="scene s-project"></div>
+        <div class="info">
+          <div>
+            <span>Collection 04</span>
+            <h3>Project <i>Lighting</i></h3>
+          </div>
+          <span class="arrow-btn" aria-hidden="true">→</span>
+        </div>
+      </a>
+      <a class="col-card wide" href="#">
+        <div class="scene s-outdoor"></div>
+        <div class="info">
+          <div>
+            <span>Collection 05</span>
+            <h3>Out<i>door</i></h3>
+          </div>
+          <span class="arrow-btn" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== STORY / BRAND ============== -->
+<section id="story" class="story">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">02 — Atelier</div>
+        <h2 class="sec-title">An atelier where <i>craft</i> meets engineering.</h2>
+      </div>
+      <p class="sec-desc">Since 2006, our workshop has lit landmark hotels, private residences, and global retail flagships across 50+ countries.</p>
+    </div>
+    <div class="story-grid">
+      <div>
+        <p class="story-quote">"We don't sell fixtures. We compose <i>atmosphere</i> — the kind a guest notices a beat before they understand why a room feels warm."</p>
+        <div class="story-meta">
+          <div><b>2006</b><span>Founded</span></div>
+          <div><b>50+</b><span>Countries served</span></div>
+          <div><b>1,200+</b><span>Projects shipped</span></div>
+        </div>
+      </div>
+      <div class="story-art" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROJECTS ============== -->
+<section id="projects" class="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">03 — Projects</div>
+        <h2 class="sec-title">Selected <i>realisations</i>.</h2>
+      </div>
+      <p class="sec-desc">Hotels, private villas, retail, and architectural lighting — built for the spaces that demand presence without noise.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj a"><div class="scene p-hotel"></div><div class="meta"><em>Hospitality · Dubai</em><h4>The Oryx Suites</h4><p>Lobby chandelier, 4.2m diameter, hand-blown amber glass.</p></div></div>
+      <div class="proj b"><div class="scene p-villa"></div><div class="meta"><em>Residence · Como</em><h4>Villa di Lago</h4><p>Bespoke crystal pendant set across two staircases.</p></div></div>
+      <div class="proj c"><div class="scene p-retail"></div><div class="meta"><em>Retail · Tokyo</em><h4>Maison Aoyama</h4><p>Brass linear system, dimmable warm 2700K.</p></div></div>
+      <div class="proj d"><div class="scene p-tower"></div><div class="meta"><em>Architectural · Singapore</em><h4>Marina Spire</h4><p>Façade rhythm lighting, IP65 outdoor rated.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CAPABILITIES ============== -->
+<section id="capabilities" class="caps">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">04 — Capabilities</div>
+        <h2 class="sec-title">Why specifiers <i>choose</i> us.</h2>
+      </div>
+      <p class="sec-desc">From sketch to crate, we own every step in-house — drawings, glass, metalwork, electronics, QC, and global logistics.</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap"><b>01</b><h4>OEM &amp; ODM</h4><p>From a hotel mood-board or an architect's sketch to a production-ready fixture.</p></div>
+      <div class="cap"><b>02</b><h4>In-house craft</h4><p>Hand-blown glass, brass casting, crystal cutting, and electronics under one roof.</p></div>
+      <div class="cap"><b>03</b><h4>Global voltage</h4><p>110V / 220V dual-voltage, dimmable drivers, UL / CE / RoHS certified.</p></div>
+      <div class="cap"><b>04</b><h4>Project logistics</h4><p>Site surveys, crated shipping, on-site supervision in 50+ countries.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== PROCESS ============== -->
+<section id="process" class="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">05 — Bespoke process</div>
+        <h2 class="sec-title">Five steps from <i>brief</i> to install.</h2>
+      </div>
+      <p class="sec-desc">A defined cadence so designers, procurement, and contractors all know what is happening at every milestone.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><h5>Brief &amp; Concept</h5><p>Mood-board review, scale studies, and material direction inside one week.</p></div>
+      <div class="step"><h5>Design &amp; Drawing</h5><p>Technical drawings, photometric data, and mock-up samples for sign-off.</p></div>
+      <div class="step"><h5>Sampling</h5><p>Physical sample of crystal / glass / finish, dispatched to your studio.</p></div>
+      <div class="step"><h5>Production &amp; QC</h5><p>Tracked schedule, third-party QC, full electrical safety testing.</p></div>
+      <div class="step"><h5>Logistics &amp; Install</h5><p>Custom crating, DDP shipping, optional on-site supervision team.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CERTIFICATIONS ============== -->
+<section id="certs" class="certs">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="sec-tag">06 — Compliance</div>
+        <h2 class="sec-title">Certified <i>for</i> the world.</h2>
+      </div>
+      <p class="sec-desc">Every fixture leaves the factory with a documented test report and matched certification.</p>
+    </div>
+    <div class="cert-row">
+      <div class="cert">CE</div>
+      <div class="cert">UL</div>
+      <div class="cert">RoHS</div>
+      <div class="cert">FCC</div>
+      <div class="cert">SAA</div>
+      <div class="cert">ISO 9001</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA ============== -->
+<section id="contact" class="cta">
+  <div class="wrap">
+    <div class="sec-tag">Bespoke inquiry</div>
+    <h2>Tell us about your <i>project</i>.</h2>
+    <p>Send drawings, mood boards or just a paragraph. We typically reply within 24 hours with a project lead and a sample plan.</p>
+    <div class="cta-actions">
+      <a class="btn-gold" href="#">Start a project →</a>
+      <a class="btn-ghost" href="#">Download catalogue (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a href="#" class="logo">L<em>U</em>MEA</a>
+        <p>Bespoke decorative lighting from the atelier — engineered for global voltage, certified for the world.</p>
+        <form class="ft-form" onsubmit="return false;">
+          <input type="email" placeholder="your@studio.com" />
+          <button>Subscribe</button>
+        </form>
+      </div>
+      <div>
+        <h6>Collections</h6>
+        <a href="#">Modern</a><a href="#">Luxury</a><a href="#">Crystal</a><a href="#">Outdoor</a><a href="#">Project Lighting</a>
+      </div>
+      <div>
+        <h6>Atelier</h6>
+        <a href="#">Brand story</a><a href="#">Capabilities</a><a href="#">Press</a><a href="#">Careers</a>
+      </div>
+      <div>
+        <h6>Contact</h6>
+        <a href="mailto:hello@lumea.com">hello@lumea.com</a>
+        <a href="#">+86 138 0000 0000</a>
+        <a href="#">Showroom · Zhongshan, CN</a>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 Lumea Atelier. All rights reserved.</span>
+      <span>Privacy · Terms · Sitemap</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

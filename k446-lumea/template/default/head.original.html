@@ -1,0 +1,73 @@
+<!--头部-->
+
+<div class="header">
+  <div class="header-content">
+    <div class="header-logo"> <a href="{pboot:sitedomain}/" class="logo"> <img class="img1" src="{pboot:sitelogo}"> <img class="img2" src="{label:logo2}"> </a> </div>
+    <div class="header-nav">
+      <div class="nav-box">
+        <li><a href="{pboot:sitedomain}/" class="{pboot:if(0=='{sort:scode}')}cur{/pboot:if} nav">首页</a> </li>
+        {pboot:nav}
+        <li><a href="[nav:link]" class="{pboot:if('[nav:scode]'=='{sort:tcode}')}cur{/pboot:if} nav">[nav:name]</a>
+          {pboot:if([nav:soncount]>0)}
+          <ul class="one" style="display: none;">
+            {pboot:2nav parent=[nav:scode]}
+            <li><a href="[2nav:link]">[2nav:name]</a>
+              <ul class="two" style="display: none;">
+                {pboot:3nav parent=[2nav:scode]}
+                <li><a href="[3nav:link]">[3nav:name]</a></li>
+                {/pboot:3nav}
+              </ul>
+            </li>
+            {/pboot:2nav}
+          </ul>
+          {/pboot:if}
+        </li>
+        {/pboot:nav} </div>
+      <div class="header-search"> <img class="search1" src="{pboot:sitedomain}/skin/images/search1.png"> <img class="search2" src="{pboot:sitedomain}/skin/images/search2.png"> </div>
+    </div>
+  </div>
+</div>
+<div class="mheader">
+  <div class="mheader-content">
+    <ul>
+      <a href="{pboot:sitedomain}/" class="mlogo"> <img class="img1" src="{pboot:sitelogo}"> <img class="img2" src="{label:logo2}"> </a>
+      <div class="header-search"> <img class="msearch1" src="{pboot:sitedomain}/skin/images/search1.png"> <img class="msearch2" src="{pboot:sitedomain}/skin/images/search2.png"> </div>
+      <div class="menu-toggle"><a href="#nav-box" class="nav-trigger"><span class="nav-open"></span><span class="nav-close"></span></a></div>
+    </ul>
+  </div>
+  <nav class="nav-container" id="nav-box">
+    <div class="nav-wrapper">
+      <ul class="onenav">
+        <li><a href="{pboot:sitedomain}/">首页</a></li>
+        {pboot:nav}
+        <li> <a href="[nav:link]" {pboot:if('[nav:scode]'=='{sort:tcode}')}class="curr"{/pboot:if}>[nav:name]</a>
+          {pboot:if([nav:soncount]>0)}<div class="twonav" href="javascript:;"></div>{/pboot:if}
+          <ul class="nav-inner" style="overflow: hidden; display: none;">
+            {pboot:2nav parent=[nav:scode]}
+            <a href="[2nav:link]">[2nav:name]</a>
+            {pboot:if([2nav:soncount]>0)}<div class="threenav" href="javascript:;" onclick="shownav(product[2nav:i])"></div>{/pboot:if}
+            <div class="shownav-c {pboot:if('[2nav:scode]'=='{sort:tcode}')}cur{/pboot:if}" id="product[2nav:i]">
+              <ul>
+                <li> 
+                  {pboot:3nav parent=[2nav:scode]}
+                  <a href="[3nav:link]" class="">[3nav:name]</a>
+                  {/pboot:3nav}
+                </li>
+              </ul>
+            </div>
+			{/pboot:2nav}
+          </ul>
+        </li>
+        {/pboot:nav}
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="search-box">
+  <div class="search-box-bg"></div>
+  <form class="search-form clear" method="post" action="{pboot:scaction}">
+    <input class="search-text" name="keyword" required placeholder="请输入搜索内容">
+    <input class="search-submit" type="submit">
+  </form>
+</div>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/header.js"></script> 

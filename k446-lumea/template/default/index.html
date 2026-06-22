@@ -1,0 +1,208 @@
+﻿{include file=head.html}
+
+<!-- ============== Hero ============== -->
+<section class="v2-hero">
+  <div class="v2-hero-media">
+    {pboot:slide gid=1 num=1}
+    {if [label:video]}
+    <video id="v2-hero-video" src="{label:video}" autoplay muted loop playsinline></video>
+    {/if}
+    <img class="v2-hero-bg" src="[slide:src]" alt="[slide:title]">
+    {/pboot:slide}
+    <div class="v2-hero-stars"></div>
+  </div>
+  <div class="v2-wrap v2-hero-text">
+    {pboot:slide gid=1 num=1}
+    <div class="v2-eyebrow v2-fade-up">{label:hero_eyebrow}</div>
+    <h1 class="v2-h1 v2-fade-up">[slide:title]</h1>
+    <div class="v2-hero-meta">
+      <p class="v2-sub v2-fade-up">{label:hero_sub}</p>
+      <div class="v2-scroll-hint"><span></span> Scroll to explore</div>
+    </div>
+    {/pboot:slide}
+    <div class="v2-hero-tags v2-fade-up">
+      {pboot:nav parent={label:collections_scode} num=5}
+      <a href="[nav:link]">[nav:name]</a>
+      {/pboot:nav}
+    </div>
+  </div>
+</section>
+
+<!-- ============== 客户/酒店品牌走马灯 ============== -->
+<div class="v2-marquee" aria-hidden="true">
+  <div class="v2-marquee-track">
+    {pboot:list scode={label:marquee_scode} num=12}
+    <span>[list:title] <i>·</i></span>
+    {/pboot:list}
+    {pboot:list scode={label:marquee_scode} num=12}
+    <span>[list:title] <i>·</i></span>
+    {/pboot:list}
+  </div>
+</div>
+
+<!-- ============== Collections ============== -->
+<section class="v2-section" id="collections">
+  <div class="v2-wrap">
+    <div class="v2-sec-head v2-fade-up">
+      <div>
+        <div class="v2-tag">01 — Collections</div>
+        <h2 class="v2-h2">Five families, <i>one</i> obsession with light.</h2>
+      </div>
+      <p class="v2-sub">Each collection is a different conversation between material, scale, and mood — yet all share the same atelier hand.</p>
+    </div>
+
+    <div class="v2-collections">
+      {pboot:nav parent={label:collections_scode} num=5}
+      {if [nav:i] == 1}<div class="v2-col-card v2-col-card-large v2-fade-up">
+      {elseif [nav:i] == 2 || [nav:i] == 3}<div class="v2-col-card v2-col-card-tall v2-fade-up">
+      {else}<div class="v2-col-card v2-col-card-wide v2-fade-up">{/if}
+        <a href="[nav:link]">
+          <div class="v2-pic" style="background-image:url([nav:pic])"></div>
+          <div class="v2-info">
+            <div>
+              <span>Collection [nav:i]</span>
+              <h3 class="v2-h3">[nav:name]</h3>
+            </div>
+            <span class="v2-arrow-btn" aria-hidden="true">→</span>
+          </div>
+        </a>
+      </div>
+      {/pboot:nav}
+    </div>
+  </div>
+</section>
+
+<!-- ============== Brand Story ============== -->
+<section class="v2-section v2-story" id="story">
+  <div class="v2-wrap">
+    <div class="v2-sec-head v2-fade-up">
+      <div>
+        <div class="v2-tag">02 — Atelier</div>
+        <h2 class="v2-h2">An atelier where <i>craft</i> meets engineering.</h2>
+      </div>
+      <p class="v2-sub">Since {label:founded_year}, our workshop has lit landmark hotels, private residences, and global retail flagships across 50+ countries.</p>
+    </div>
+    <div class="v2-story-grid">
+      <div>
+        <blockquote class="v2-story-quote v2-fade-up">"We don't sell fixtures. We compose <i>atmosphere</i> — the kind a guest notices a beat before they understand why a room feels warm."</blockquote>
+        <div class="v2-story-meta">
+          <div class="v2-fade-up"><b>{label:founded_year}</b><span>Founded</span></div>
+          <div class="v2-fade-up"><b>{label:countries_count}+</b><span>Countries served</span></div>
+          <div class="v2-fade-up"><b>{label:projects_count}+</b><span>Projects shipped</span></div>
+        </div>
+      </div>
+      <div class="v2-story-art v2-fade-up">
+        {pboot:content id={label:story_content_id}}
+        {pboot:pics id={content:id} num=1}
+        <img src="[pics:src]" alt="Workshop">
+        {/pboot:pics}
+        {/pboot:content}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== Featured Projects ============== -->
+<section class="v2-section v2-projects" id="projects">
+  <div class="v2-wrap">
+    <div class="v2-sec-head v2-fade-up">
+      <div>
+        <div class="v2-tag">03 — Selected Projects</div>
+        <h2 class="v2-h2">Recent <i>realisations</i>.</h2>
+      </div>
+      <p class="v2-sub">Hotels, private villas, retail, and architectural lighting — built for the spaces that demand presence without noise.</p>
+    </div>
+    <div class="v2-proj-grid">
+      {pboot:list scode={label:projects_scode} num=4 order=sorting}
+      <div class="v2-proj {if [list:i]%2 == 1}v2-proj-wide{else}v2-proj-narrow{/if} v2-fade-up">
+        <a href="[list:link]">
+          <div class="v2-pic" style="background-image:url([list:ico])"></div>
+          <div class="v2-meta">
+            <em>{pboot:sort scode=[list:sortcode]} [sort:name] {/pboot:sort}</em>
+            <h4>[list:title]</h4>
+            <p>[list:description lencn=50]</p>
+          </div>
+        </a>
+      </div>
+      {/pboot:list}
+    </div>
+  </div>
+</section>
+
+<!-- ============== Core Capabilities ============== -->
+<section class="v2-section v2-caps" id="capabilities">
+  <div class="v2-wrap">
+    <div class="v2-sec-head v2-fade-up">
+      <div>
+        <div class="v2-tag">04 — Capabilities</div>
+        <h2 class="v2-h2">Why specifiers <i>choose</i> us.</h2>
+      </div>
+      <p class="v2-sub">From sketch to crate, we own every step in-house — drawings, glass, metalwork, electronics, QC, and global logistics.</p>
+    </div>
+    <div class="v2-caps-grid">
+      <div class="v2-cap v2-fade-up"><b>01</b><h4>OEM &amp; ODM</h4><p>From a hotel mood-board or an architect's sketch to a production-ready fixture.</p></div>
+      <div class="v2-cap v2-fade-up"><b>02</b><h4>In-house craft</h4><p>Hand-blown glass, brass casting, crystal cutting, and electronics under one roof.</p></div>
+      <div class="v2-cap v2-fade-up"><b>03</b><h4>Global voltage</h4><p>110V / 220V dual-voltage, dimmable drivers, UL / CE / RoHS certified.</p></div>
+      <div class="v2-cap v2-fade-up"><b>04</b><h4>Project logistics</h4><p>Site surveys, crated shipping, on-site supervision in 50+ countries.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== Custom Process ============== -->
+<section class="v2-section v2-process" id="process">
+  <div class="v2-wrap">
+    <div class="v2-sec-head v2-fade-up">
+      <div>
+        <div class="v2-tag">05 — Bespoke process</div>
+        <h2 class="v2-h2">Five steps from <i>brief</i> to install.</h2>
+      </div>
+      <p class="v2-sub">A defined cadence so designers, procurement, and contractors all know what is happening at every milestone.</p>
+    </div>
+    <div class="v2-timeline">
+      <div class="v2-step v2-fade-up"><h5>Brief &amp; Concept</h5><p>Mood-board review, scale studies, and material direction inside one week.</p></div>
+      <div class="v2-step v2-fade-up"><h5>Design &amp; Drawing</h5><p>Technical drawings, photometric data, and mock-up samples for sign-off.</p></div>
+      <div class="v2-step v2-fade-up"><h5>Sampling</h5><p>Physical sample of crystal / glass / finish, dispatched to your studio.</p></div>
+      <div class="v2-step v2-fade-up"><h5>Production &amp; QC</h5><p>Tracked schedule, third-party QC, full electrical safety testing.</p></div>
+      <div class="v2-step v2-fade-up"><h5>Logistics &amp; Install</h5><p>Custom crating, DDP shipping, optional on-site supervision team.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== Certifications ============== -->
+<section class="v2-section v2-certs" id="certifications">
+  <div class="v2-wrap">
+    <div class="v2-sec-head v2-fade-up">
+      <div>
+        <div class="v2-tag">06 — Compliance</div>
+        <h2 class="v2-h2">Certified <i>for</i> the world.</h2>
+      </div>
+      <p class="v2-sub">Every fixture leaves the factory with a documented test report and matched certification.</p>
+    </div>
+    <div class="v2-cert-row">
+      <div class="v2-cert v2-fade-up"><div class="v2-cert-text">CE</div></div>
+      <div class="v2-cert v2-fade-up"><div class="v2-cert-text">UL</div></div>
+      <div class="v2-cert v2-fade-up"><div class="v2-cert-text">RoHS</div></div>
+      <div class="v2-cert v2-fade-up"><div class="v2-cert-text">FCC</div></div>
+      <div class="v2-cert v2-fade-up"><div class="v2-cert-text">SAA</div></div>
+      <div class="v2-cert v2-fade-up"><div class="v2-cert-text">ISO 9001</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA to contact ============== -->
+<section class="v2-cta" id="contact-cta">
+  <div class="v2-wrap v2-fade-up">
+    <div class="v2-tag">Bespoke inquiry</div>
+    <h2>Tell us about your <i>project</i>.</h2>
+    <p>Send drawings, mood boards or just a paragraph. We typically reply within 24 hours with a project lead and a sample plan.</p>
+    <div class="v2-cta-actions">
+      {pboot:sort scode={label:contact_scode}}
+      <a href="[sort:link]" class="v2-btn v2-btn--gold">Start a project →</a>
+      {/pboot:sort}
+      <a href="{label:catalogue_pdf}" target="_blank" class="v2-btn v2-btn--ghost">Download catalogue (PDF)</a>
+    </div>
+  </div>
+</section>
+
+{include file=foot.html}
+

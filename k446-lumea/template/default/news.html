@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title>{content:title}-{pboot:sitetitle}</title>
+<meta name="keywords" content="{content:keywords}">
+<meta name="description" content="{content:description}">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/swiper.min.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/style.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/media.css">
+<link rel="stylesheet" href="{pboot:sitedomain}/skin/css/animate.min.css">
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/swiper.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/wow.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/jquery.countup.min.js"></script>
+<script type="text/javascript" src="{pboot:sitedomain}/skin/js/main.js"></script>
+</head>
+<body class="menu-bg">
+{include file=head.html}
+<!--内容-->
+{pboot:sort scode={sort:tcode}}
+<div id="bann" style="background-image: url([sort:pic]);">
+  <div class="container">
+    <div class="t1 wow fadeInUp" data-wow-delay="200ms">[sort:subname]<br>
+    </div>
+    <div class="t2 wow fadeInUp" data-wow-delay="300ms"> <span>[sort:def1]</span> </div>
+  </div>
+</div>
+{/pboot:sort}
+<div class="nav_pc hide wow fadeInLeft" id="nav" data-wow-delay="400ms">
+  <div class="container"> <a class="home" href="{pboot:sitedomain}/"><img src="{pboot:sitedomain}/skin/images/home_ico.png" style="background-color: #0f6ab4;" alt=""></a>
+    <div class="first">
+      <h4>{sort:topname}</h4>
+      <ul>
+        {pboot:nav}
+        <li><a href="[nav:link]">[nav:name]</a></li>
+        {/pboot:nav}
+      </ul>
+    </div>
+    <div class="second active">
+      <h4> {sort:name} </h4>
+      <ul>
+        {pboot:nav num=50 parent={sort:tcode}}
+        <li><a href="[nav:link]">[nav:name]</a></li>
+        {/pboot:nav}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="nav_phone hide container ">
+  <p>{pboot:position}</p>
+</div>
+<div id="cases_dt">
+  <div class="container">
+    <div class="solution-detail">
+      <div class="title wow fadeInUp" data-wow-delay="400ms">{content:title}<span>浏览数：{content:visits}</span></div>
+      <div class="content wow fadeInUp maximg" data-wow-delay="500ms">
+        {content:content}
+      </div>
+      <div class="detail-bottom">
+        <div class="left wow fadeInLeft" data-wow-delay="600ms">
+          <div class="pg"><span>上一个：</span> <a class="item" href="{content:prelink}">{content:pretitle}</a> </div>
+          <div class="pg"><span>下一个：</span> <a href="{content:nextlink}" class="item">{content:nexttitle}</a> </div>
+        </div>
+        <a href="{sort:link}" class="back wow fadeInRight" data-wow-delay="600ms">返回列表</a> </div>
+    </div>
+  </div>
+</div>
+{include file=foot.html}
+<script>
+    $('.nav_pc .first, .nav_pc .second').on('mouseenter mouseleave', function () {
+        $(this).children('ul').stop().slideToggle()
+    });
+</script>
+</body>
+</html>

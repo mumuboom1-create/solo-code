@@ -1,0 +1,43 @@
+﻿{include file=head.html}
+{pboot:sort scode={sort:tcode}}
+<div class="v2-page-banner" style="margin-top:72px">
+  <div class="v2-bg-image" style="background-image:url([sort:pic])"></div>
+  <div class="v2-wrap">
+    <h1 class="v2-fade-up">[sort:name]</h1>
+  </div>
+{/pboot:sort}
+</div>
+
+<div class="v2-article">
+  <div class="v2-wrap">
+    {pboot:content}
+    <div class="v2-fade-up">
+      [content:content]
+    </div>
+    {/pboot:content}
+
+    {pboot:sort scode={label:factory_gallery}}
+    <h2 class="v2-h2" style="margin:60px 0 32px">Factory <i>tour</i></h2>
+    <div class="v2-factory-gallery">
+      {pboot:content id=[sort:ctcode] num=12}
+      <a class="v2-fade-up" href="[content:ico]" data-fancybox="gallery">
+        <img src="[content:ico]" alt="[content:title]">
+      </a>
+      {/pboot:content}
+    </div>
+    {/pboot:sort}
+
+    {pboot:sort scode={label:cert_gallery}}
+    <h2 class="v2-h2" style="margin:60px 0 32px">Certifi<cations</i></h2>
+    <div class="v2-cert-row">
+      {pboot:content id=[sort:ctcode] num=12}
+      <div class="v2-cert v2-fade-up">
+        <img src="[content:ico]" alt="[content:title]">
+      </div>
+      {/pboot:content}
+    </div>
+    {/pboot:sort}
+  </div>
+</div>
+{include file=foot.html}
+

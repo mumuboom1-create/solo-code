@@ -1,0 +1,30 @@
+# PbootCMS Runtime
+/runtime/
+
+# Database files
+/data/*.db
+/data/*.sqlite
+
+# User uploads
+/static/upload/
+
+# Backup files
+/static/backup/
+
+# Template zip
+*.zip
+
+# Environment config
+.env
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug scripts (keep in repo but these are tools)
+# /tools/ directory is kept
