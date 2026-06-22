@@ -4,6 +4,9 @@ return array(
     
     'debug' => true,
 
+    // 授权检查开关，未配置时默认开启；本地调试如需关闭，设置为 false
+    // 'license_check' => false,
+
     // 定义CMS名称
     'cmsname' => 'PbootCMS',
     

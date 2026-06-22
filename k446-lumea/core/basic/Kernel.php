@@ -10,34 +10,24 @@ namespace core\basic;
 
 class Kernel
 {
-    /**
-     * Boot entry
-     */
     public static function run()
     {
-        // ====== License check ======
         self::checkLicense();
-        // ====== License check end ======
 
-        // URL safety check (compatible with patched Check::checkUrl)
         if (method_exists('core\basic\Check', 'checkUrl')) {
             \core\basic\Check::checkUrl();
         }
 
-        // Resolve request URL
         $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
-        // Strip entry filename like "home.php" or "index.php"
         if (defined('URL_BIND')) {
             $url = preg_replace('{/?' . URL_BIND . '\.php}i', '', $url);
         }
 
-        // Strip site index dir prefix (subdirectory deployment)
         if (defined('SITE_INDEX_DIR') && SITE_INDEX_DIR) {
             $url = preg_replace('{^' . preg_quote(SITE_INDEX_DIR, '{') . '}i', '', $url);
         }
 
-        // Parse query string
         if (strpos($url, '?') !== false) {
             list($path, $query) = explode('?', $url, 2);
             parse_str($query, $queryArr);
@@ -48,10 +38,8 @@ class Kernel
             $path = $url;
         }
 
-        // Trim path
         $path = trim($path, '/');
 
-        // Compatibility mode: paths sent inside ?path/like/this
         if ($path === '' && !empty($_GET)) {
             foreach ($_GET as $k => $v) {
                 if ($v === '' && strpos($k, '/') !== false) {
@@ -62,7 +50,6 @@ class Kernel
             }
         }
 
-        // Define request-level constants used by controllers
         if (!defined('URL')) {
             $scheme = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http';
             $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
@@ -70,28 +57,21 @@ class Kernel
             define('URL', $scheme . '://' . $host . $reqUri);
         }
         if (!defined('P')) {
-            // P: PathInfo-style path (without leading/trailing slash). Empty when no path.
             define('P', $path);
         }
         if (!defined('G')) {
             define('G', isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '');
         }
 
-        // Dispatch
         self::dispatch($path);
     }
-    /**
-     * Dispatch path -> module/controller/action and execute
-     */
+
     private static function dispatch($path)
     {
-        // Apply user-defined route rewrites
         $path = self::applyRoutes($path);
 
-        // Apply domain bind
         $path = self::applyDomainBind($path);
 
-        // Available modules
         $publicApps = Config::get('public_app');
         if (is_string($publicApps)) {
             $publicApps = array_map('trim', explode(',', $publicApps));
@@ -99,19 +79,15 @@ class Kernel
             $publicApps = array('home', 'admin', 'api');
         }
 
-        // Default module: URL_BIND > first public_app > 'home'
         $defaultModule = defined('URL_BIND') ? URL_BIND : (isset($publicApps[0]) ? $publicApps[0] : 'home');
 
-        // Strip URL suffix like ".html" from full path
         $suffix = Config::get('url_rule_suffix');
         if ($suffix && strlen($path) > strlen($suffix) && substr($path, -strlen($suffix)) === $suffix) {
             $path = substr($path, 0, -strlen($suffix));
         }
 
-        // Split path
         $segments = $path === '' ? array() : explode('/', $path);
 
-        // Module: if first segment matches a known module name use it, otherwise stay with default
         $module = $defaultModule;
         if (!empty($segments)) {
             $first = strtolower($segments[0]);
@@ -122,27 +98,22 @@ class Kernel
             }
         }
 
-        // Controller and action defaults
         $controllerName = !empty($segments) ? array_shift($segments) : 'index';
         $actionName = !empty($segments) ? array_shift($segments) : 'index';
 
-        // Strip suffix on action if still present (defensive)
         if ($suffix && strlen($actionName) > strlen($suffix) && substr($actionName, -strlen($suffix)) === $suffix) {
             $actionName = substr($actionName, 0, -strlen($suffix));
         }
 
-        // Remaining segments treat as key/value pairs into $_GET (PathInfo style)
         for ($i = 0, $n = count($segments); $i + 1 < $n; $i += 2) {
             $_GET[$segments[$i]] = $segments[$i + 1];
         }
 
-        // Sanitize names
         $controllerName = preg_replace('/[^a-zA-Z0-9_]/', '', $controllerName);
         $actionName = preg_replace('/[^a-zA-Z0-9_]/', '', $actionName);
         if ($controllerName === '') { $controllerName = 'index'; }
         if ($actionName === '') { $actionName = 'index'; }
 
-        // Define framework constants used by other classes
         if (!defined('M')) { define('M', $module); }
         if (!defined('C')) { define('C', ucfirst($controllerName)); }
         if (!defined('A')) { define('A', $actionName); }
@@ -155,7 +126,6 @@ class Kernel
             define('APP_VIEW_PATH', ROOT_PATH . $tplDir);
         }
 
-        // Load shared application helper functions (PbootCMS convention)
         $commonFunc = APP_PATH . '/common/function.php';
         if (file_exists($commonFunc)) {
             require_once $commonFunc;
@@ -165,7 +135,6 @@ class Kernel
             require_once $moduleFunc;
         }
 
-        // Locate controller class file
         $className = '\\app\\' . M . '\\controller\\' . ucfirst($controllerName) . 'Controller';
         $classFile = APP_CONTROLLER_PATH . '/' . ucfirst($controllerName) . 'Controller.php';
 
@@ -173,10 +142,8 @@ class Kernel
             error('Controller ' . ucfirst($controllerName) . ' not found: ' . $classFile);
         }
 
-        // Instantiate and call
         $instance = new $className();
 
-        // Root path for home/index -> call getIndexPage directly
         if ($module === 'home' && strtolower($controllerName) === 'index' && $actionName === 'index' && $path === '') {
             if (method_exists($instance, 'getIndexPage')) {
                 $instance->getIndexPage();
@@ -187,7 +154,6 @@ class Kernel
         if (method_exists($instance, $actionName)) {
             $callable = array($instance, $actionName);
         } elseif (method_exists($instance, '_empty')) {
-            // PbootCMS-style fallback dispatcher
             $callable = array($instance, '_empty');
         } else {
             error('Method ' . $actionName . ' not found in controller ' . ucfirst($controllerName));
@@ -198,9 +164,7 @@ class Kernel
             echo $result;
         }
     }
-    /**
-     * Apply route rewrite rules from Config('url_route')
-     */
+
     private static function applyRoutes($path)
     {
         $routes = Config::get('url_route');
@@ -227,9 +191,6 @@ class Kernel
         return $path;
     }
 
-    /**
-     * Apply domain binding from Config('app_domain_bind')
-     */
     private static function applyDomainBind($path)
     {
         $domains = Config::get('app_domain_bind');
@@ -247,11 +208,16 @@ class Kernel
         return $path;
     }
 
-    /**
-     * License check: verify license code with RSA public key
-     */
     private static function checkLicense()
     {
+        $enableCheck = Config::get('license_check');
+        if ($enableCheck === null) {
+            $enableCheck = true;
+        }
+        if (!$enableCheck) {
+            return;
+        }
+
         $publicKey = "-----BEGIN PUBLIC KEY-----\n"
             . "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAk4FsK4RVh/GDpSuWz8rV\n"
             . "WtyOMFUydZmcFx+DJPzmqJ5td8g5/KuzbntPHVdQP+Ivbb1DWh/ZFMHAMqIJ9ytK\n"
@@ -261,12 +227,6 @@ class Kernel
             . "3uChyyNDEiqowPyDr0G4seWumct0KlWYMXLfpEM9AIF2AS69LLPguuAiNzqqd6bj\n"
             . "lQIDAQAB\n"
             . "-----END PUBLIC KEY-----";
-
-        // Toggle: false to bypass during local debugging
-        $enableCheck = false;
-        if (!$enableCheck) {
-            return;
-        }
 
         $host = isset($_SERVER['HTTP_HOST']) ? strtolower($_SERVER['HTTP_HOST']) : '';
         $host = preg_replace('/:\d+$/', '', $host);
@@ -283,10 +243,6 @@ class Kernel
         }
     }
 
-    /**
-     * RSA public key verification of license code.
-     * Format: domain:base64url(signature)
-     */
     private static function verifyLicense($domain, $sn, $publicKey)
     {
         if (empty($sn) || empty($domain)) {
@@ -325,9 +281,6 @@ class Kernel
         return false;
     }
 
-    /**
-     * Local/intranet env detection (license bypass)
-     */
     private static function isLocalEnv($host)
     {
         $localPatterns = array('localhost', '127.0.0.1', '::1');
@@ -340,9 +293,6 @@ class Kernel
         return false;
     }
 
-    /**
-     * Show unauthorized notice page
-     */
     private static function showUnauthorizedPage($host)
     {
         $authPagePath = ROOT_PATH . '/core/auth_notice.html';

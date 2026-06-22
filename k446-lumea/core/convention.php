@@ -6,7 +6,10 @@
 return array(
     // 调试模式
     'debug' => false,
-    
+
+    // 授权检查开关，默认开启；如需在本地调试时关闭，可在站点 config.php 中设置为 false
+    'license_check' => true,
+
     // 系统授权码
     'sn' => '281BE285D7',
     
